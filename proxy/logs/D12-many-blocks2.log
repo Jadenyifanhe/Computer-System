@@ -1,0 +1,1250 @@
+>option timing 1
+>option locking 1
+>option semaphore 1
+>proxy ./proxy
+Proxy set up at houndshark.ics.cs.cmu.edu:22873
+>source '/afs/andrew.cmu.edu/usr20/yuchenwu/private/18213/proxy-lab-Chibadaisuki/tests/D12-many-blocks2.cmd'
+># Cache should be able to hold many small binary blocks
+>serve s1 s2
+Server s1 running at houndshark.ics.cs.cmu.edu:6439
+Server s2 running at houndshark.ics.cs.cmu.edu:10461
+># 50 * 20K = 1000K.  The cache should be able to hold all of these
+>generate random-binary00.bin 20K
+>generate random-binary01.bin 20K
+>generate random-binary02.bin 20K
+>generate random-binary03.bin 20K
+>generate random-binary04.bin 20K
+>generate random-binary05.bin 20K
+>generate random-binary06.bin 20K
+>generate random-binary07.bin 20K
+>generate random-binary08.bin 20K
+>generate random-binary09.bin 20K
+>generate random-binary10.bin 20K
+>generate random-binary11.bin 20K
+>generate random-binary12.bin 20K
+>generate random-binary13.bin 20K
+>generate random-binary14.bin 20K
+>generate random-binary15.bin 20K
+>generate random-binary16.bin 20K
+>generate random-binary17.bin 20K
+>generate random-binary18.bin 20K
+>generate random-binary19.bin 20K
+>generate random-binary20.bin 20K
+>generate random-binary21.bin 20K
+>generate random-binary22.bin 20K
+>generate random-binary23.bin 20K
+>generate random-binary24.bin 20K
+>generate random-binary25.bin 20K
+>generate random-binary26.bin 20K
+>generate random-binary27.bin 20K
+>generate random-binary28.bin 20K
+>generate random-binary29.bin 20K
+>generate random-binary30.bin 20K
+>generate random-binary31.bin 20K
+>generate random-binary32.bin 20K
+>generate random-binary33.bin 20K
+>generate random-binary34.bin 20K
+>generate random-binary35.bin 20K
+>generate random-binary36.bin 20K
+>generate random-binary37.bin 20K
+>generate random-binary38.bin 20K
+>generate random-binary39.bin 20K
+>generate random-binary40.bin 20K
+>generate random-binary41.bin 20K
+>generate random-binary42.bin 20K
+>generate random-binary43.bin 20K
+>generate random-binary44.bin 20K
+>generate random-binary45.bin 20K
+>generate random-binary46.bin 20K
+>generate random-binary47.bin 20K
+>generate random-binary48.bin 20K
+>generate random-binary49.bin 20K
+># Generate request/response that will cause sequential proxy to fail
+>request rx0 random-binary00.bin s2
+Client: Requesting '/random-binary00.bin' from houndshark.ics.cs.cmu.edu:10461
+>request rx1 random-binary01.bin s2
+Client: Requesting '/random-binary01.bin' from houndshark.ics.cs.cmu.edu:10461
+>wait *
+>respond rx1 rx0
+Server responded to request rx1 with status ok
+Server responded to request rx0 with status ok
+>wait *
+>check rx0
+Request rx0 yielded expected status 'ok'
+>check rx1
+Request rx1 yielded expected status 'ok'
+># These should all be cached
+>fetch f00 random-binary00.bin s1
+Client: Fetching '/random-binary00.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f01 random-binary01.bin s1
+Client: Fetching '/random-binary01.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f02 random-binary02.bin s1
+Client: Fetching '/random-binary02.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f03 random-binary03.bin s1
+Client: Fetching '/random-binary03.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f04 random-binary04.bin s1
+Client: Fetching '/random-binary04.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f05 random-binary05.bin s1
+Client: Fetching '/random-binary05.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f06 random-binary06.bin s1
+Client: Fetching '/random-binary06.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f07 random-binary07.bin s1
+Client: Fetching '/random-binary07.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f08 random-binary08.bin s1
+Client: Fetching '/random-binary08.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f09 random-binary09.bin s1
+Client: Fetching '/random-binary09.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be cached and not cause any evictions
+>fetch f10 random-binary10.bin s1
+Client: Fetching '/random-binary10.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f11 random-binary11.bin s1
+Client: Fetching '/random-binary11.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f12 random-binary12.bin s1
+Client: Fetching '/random-binary12.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f13 random-binary13.bin s1
+Client: Fetching '/random-binary13.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f14 random-binary14.bin s1
+Client: Fetching '/random-binary14.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f15 random-binary15.bin s1
+Client: Fetching '/random-binary15.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f16 random-binary16.bin s1
+Client: Fetching '/random-binary16.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f17 random-binary17.bin s1
+Client: Fetching '/random-binary17.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f18 random-binary18.bin s1
+Client: Fetching '/random-binary18.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f19 random-binary19.bin s1
+Client: Fetching '/random-binary19.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be cached and not cause any evictions
+>fetch f20 random-binary20.bin s1
+Client: Fetching '/random-binary20.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f21 random-binary21.bin s1
+Client: Fetching '/random-binary21.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f22 random-binary22.bin s1
+Client: Fetching '/random-binary22.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f23 random-binary23.bin s1
+Client: Fetching '/random-binary23.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f24 random-binary24.bin s1
+Client: Fetching '/random-binary24.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f25 random-binary25.bin s1
+Client: Fetching '/random-binary25.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f26 random-binary26.bin s1
+Client: Fetching '/random-binary26.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f27 random-binary27.bin s1
+Client: Fetching '/random-binary27.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f28 random-binary28.bin s1
+Client: Fetching '/random-binary28.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f29 random-binary29.bin s1
+Client: Fetching '/random-binary29.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be cached and not cause any evictions
+>fetch f30 random-binary30.bin s1
+Client: Fetching '/random-binary30.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f31 random-binary31.bin s1
+Client: Fetching '/random-binary31.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f32 random-binary32.bin s1
+Client: Fetching '/random-binary32.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f33 random-binary33.bin s1
+Client: Fetching '/random-binary33.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f34 random-binary34.bin s1
+Client: Fetching '/random-binary34.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f35 random-binary35.bin s1
+Client: Fetching '/random-binary35.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f36 random-binary36.bin s1
+Client: Fetching '/random-binary36.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f37 random-binary37.bin s1
+Client: Fetching '/random-binary37.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f38 random-binary38.bin s1
+Client: Fetching '/random-binary38.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f39 random-binary39.bin s1
+Client: Fetching '/random-binary39.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be cached and not cause any evictions
+>fetch f40 random-binary40.bin s1
+Client: Fetching '/random-binary40.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f41 random-binary41.bin s1
+Client: Fetching '/random-binary41.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f42 random-binary42.bin s1
+Client: Fetching '/random-binary42.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f43 random-binary43.bin s1
+Client: Fetching '/random-binary43.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f44 random-binary44.bin s1
+Client: Fetching '/random-binary44.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f45 random-binary45.bin s1
+Client: Fetching '/random-binary45.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f46 random-binary46.bin s1
+Client: Fetching '/random-binary46.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f47 random-binary47.bin s1
+Client: Fetching '/random-binary47.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f48 random-binary48.bin s1
+Client: Fetching '/random-binary48.bin' from houndshark.ics.cs.cmu.edu:6439
+>fetch f49 random-binary49.bin s1
+Client: Fetching '/random-binary49.bin' from houndshark.ics.cs.cmu.edu:6439
+>wait *
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57886)
+Proxy stdout: Request-ID: rx0
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57888)
+Proxy stdout: Request-ID: rx1
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57896)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57898)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57900)
+Proxy stdout: Request-ID: f01
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: f00
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57902)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57904)
+Proxy stdout: Request-ID: f02
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57906)
+Proxy stdout: † ­ûRequest-ID: f03
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: f04
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57908)
+Proxy stdout: † ­û† ­ûRequest-ID: f05
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûRequest-ID: f06
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57910)
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57912)
+Proxy stdout: † ­û† ­û† ­û† ­û† ­ûRequest-ID: f08
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: f07
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57914)
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57916)
+Proxy stdout: † ­û† ­û† ­ûRequest-ID: f09
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûRequest-ID: f10
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57918)
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57920)
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57922)
+Proxy stdout: Request-ID: f12
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûRequest-ID: f11
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûRequest-ID: f13
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57924)
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57926)
+Proxy stdout: † ­û† ­ûRequest-ID: f14
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57928)
+Proxy stdout: † ­ûRequest-ID: f15
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57930)
+Proxy stdout: † ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57932)
+Proxy stdout: † ­ûRequest-ID: f16
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûRequest-ID: f17
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûRequest-ID: f18
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57934)
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57936)
+Proxy stdout: † ­ûRequest-ID: f19
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57938)
+Proxy stdout: † ­ûRequest-ID: f20
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57940)
+Proxy stdout: † ­û† ­ûRequest-ID: f21
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57942)
+Proxy stdout: † ­ûRequest-ID: f22
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57944)
+Proxy stdout: Request-ID: f23
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57946)
+Proxy stdout: † ­ûRequest-ID: f24
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57948)
+Proxy stdout: † ­û† ­ûRequest-ID: f25
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57950)
+Proxy stdout: Request-ID: f26
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57952)
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57954)
+Proxy stdout: Request-ID: f28
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûRequest-ID: f27
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57956)
+Proxy stdout: † ­ûRequest-ID: f29
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57958)
+Proxy stdout: † ­ûRequest-ID: f30
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57960)
+Proxy stdout: † ­û† ­û† ­û† ­û† ­ûRequest-ID: f31
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57964)
+Proxy stdout: † ­ûRequest-ID: f32
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57966)
+Proxy stdout: † ­û† ­ûRequest-ID: f33
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57968)
+Proxy stdout: Request-ID: f34
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57970)
+Proxy stdout: Request-ID: f35
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57972)
+Proxy stdout: Request-ID: f36
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+># Check all of the files
+>check f20
+Request f20 yielded expected status 'ok'
+>check f21
+Request f21 yielded expected status 'ok'
+>check f22
+Request f22 yielded expected status 'ok'
+>check f23
+Request f23 yielded expected status 'ok'
+>check f24
+Request f24 yielded expected status 'ok'
+>check f25
+Request f25 yielded expected status 'ok'
+>check f26
+Request f26 yielded expected status 'ok'
+>check f27
+Request f27 yielded expected status 'ok'
+>check f28
+Request f28 yielded expected status 'ok'
+>check f29
+Request f29 yielded expected status 'ok'
+>check f30
+Request f30 yielded expected status 'ok'
+>check f31
+Request f31 yielded expected status 'ok'
+>check f32
+Request f32 yielded expected status 'ok'
+>check f33
+Request f33 yielded expected status 'ok'
+>check f34
+Request f34 yielded expected status 'ok'
+>check f35
+Request f35 yielded expected status 'ok'
+>check f36
+Request f36 yielded expected status 'ok'
+>check f37
+Request f37 yielded expected status 'ok'
+>check f38
+Request f38 yielded expected status 'ok'
+>check f39
+Request f39 yielded expected status 'ok'
+>check f40
+Request f40 yielded expected status 'ok'
+>check f41
+Request f41 yielded expected status 'ok'
+>check f42
+Request f42 yielded expected status 'ok'
+>check f43
+Request f43 yielded expected status 'ok'
+>check f44
+Request f44 yielded expected status 'ok'
+>check f45
+Request f45 yielded expected status 'ok'
+>check f46
+Request f46 yielded expected status 'ok'
+>check f47
+Request f47 yielded expected status 'ok'
+>check f48
+Request f48 yielded expected status 'ok'
+>check f49
+Request f49 yielded expected status 'ok'
+>check f00
+Request f00 yielded expected status 'ok'
+>check f01
+Request f01 yielded expected status 'ok'
+>check f02
+Request f02 yielded expected status 'ok'
+>check f03
+Request f03 yielded expected status 'ok'
+>check f04
+Request f04 yielded expected status 'ok'
+>check f05
+Request f05 yielded expected status 'ok'
+>check f06
+Request f06 yielded expected status 'ok'
+>check f07
+Request f07 yielded expected status 'ok'
+>check f08
+Request f08 yielded expected status 'ok'
+>check f09
+Request f09 yielded expected status 'ok'
+>check f10
+Request f10 yielded expected status 'ok'
+>check f11
+Request f11 yielded expected status 'ok'
+>check f12
+Request f12 yielded expected status 'ok'
+>check f13
+Request f13 yielded expected status 'ok'
+>check f14
+Request f14 yielded expected status 'ok'
+>check f15
+Request f15 yielded expected status 'ok'
+>check f16
+Request f16 yielded expected status 'ok'
+>check f17
+Request f17 yielded expected status 'ok'
+>check f18
+Request f18 yielded expected status 'ok'
+>check f19
+Request f19 yielded expected status 'ok'
+># These should all be in the cache
+>request r00 random-binary00.bin s1
+Client: Requesting '/random-binary00.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r01 random-binary01.bin s1
+Client: Requesting '/random-binary01.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r02 random-binary02.bin s1
+Client: Requesting '/random-binary02.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r03 random-binary03.bin s1
+Client: Requesting '/random-binary03.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r04 random-binary04.bin s1
+Client: Requesting '/random-binary04.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r05 random-binary05.bin s1
+Client: Requesting '/random-binary05.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r06 random-binary06.bin s1
+Client: Requesting '/random-binary06.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r07 random-binary07.bin s1
+Client: Requesting '/random-binary07.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r08 random-binary08.bin s1
+Client: Requesting '/random-binary08.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r09 random-binary09.bin s1
+Client: Requesting '/random-binary09.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be in the cache
+>request r10 random-binary10.bin s1
+Client: Requesting '/random-binary10.bin' from houndshark.ics.cs.cmu.edu:6439
+Proxy stderr: Total cache size exceeded, evicting LRU cache
+>request r11 random-binary11.bin s1
+Client: Requesting '/random-binary11.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r12 random-binary12.bin s1
+Client: Requesting '/random-binary12.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r13 random-binary13.bin s1
+Client: Requesting '/random-binary13.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r14 random-binary14.bin s1
+Client: Requesting '/random-binary14.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r15 random-binary15.bin s1
+Client: Requesting '/random-binary15.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r16 random-binary16.bin s1
+Client: Requesting '/random-binary16.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r17 random-binary17.bin s1
+Client: Requesting '/random-binary17.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r18 random-binary18.bin s1
+Client: Requesting '/random-binary18.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r19 random-binary19.bin s1
+Client: Requesting '/random-binary19.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be in the cache
+>request r20 random-binary20.bin s1
+Client: Requesting '/random-binary20.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r21 random-binary21.bin s1
+Client: Requesting '/random-binary21.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r22 random-binary22.bin s1
+Client: Requesting '/random-binary22.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r23 random-binary23.bin s1
+Client: Requesting '/random-binary23.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r24 random-binary24.bin s1
+Client: Requesting '/random-binary24.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r25 random-binary25.bin s1
+Client: Requesting '/random-binary25.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r26 random-binary26.bin s1
+Client: Requesting '/random-binary26.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r27 random-binary27.bin s1
+Client: Requesting '/random-binary27.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r28 random-binary28.bin s1
+Client: Requesting '/random-binary28.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r29 random-binary29.bin s1
+Client: Requesting '/random-binary29.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be in the cache
+>request r30 random-binary30.bin s1
+Client: Requesting '/random-binary30.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r31 random-binary31.bin s1
+Client: Requesting '/random-binary31.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r32 random-binary32.bin s1
+Client: Requesting '/random-binary32.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r33 random-binary33.bin s1
+Client: Requesting '/random-binary33.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r34 random-binary34.bin s1
+Client: Requesting '/random-binary34.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r35 random-binary35.bin s1
+Client: Requesting '/random-binary35.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r36 random-binary36.bin s1
+Client: Requesting '/random-binary36.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r37 random-binary37.bin s1
+Client: Requesting '/random-binary37.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r38 random-binary38.bin s1
+Client: Requesting '/random-binary38.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r39 random-binary39.bin s1
+Client: Requesting '/random-binary39.bin' from houndshark.ics.cs.cmu.edu:6439
+># These should all be in the cache
+>request r40 random-binary40.bin s1
+Client: Requesting '/random-binary40.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r41 random-binary41.bin s1
+Client: Requesting '/random-binary41.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r42 random-binary42.bin s1
+Client: Requesting '/random-binary42.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r43 random-binary43.bin s1
+Client: Requesting '/random-binary43.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r44 random-binary44.bin s1
+Client: Requesting '/random-binary44.bin' from houndshark.ics.cs.cmu.edu:6439
+>request r45 random-binary45.bin s1
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57976)
+Client: Requesting '/random-binary45.bin' from houndshark.ics.cs.cmu.edu:6439
+Proxy stdout: Request-ID: f37
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+>request r46 random-binary46.bin s1
+Client: Requesting '/random-binary46.bin' from houndshark.ics.cs.cmu.edu:6439
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57978)
+Proxy stdout: † ­ûRequest-ID: f39
+>request r47 random-binary47.bin s1
+Client: Requesting '/random-binary47.bin' from houndshark.ics.cs.cmu.edu:6439
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+>request r48 random-binary48.bin s1
+Client: Requesting '/random-binary48.bin' from houndshark.ics.cs.cmu.edu:6439
+Proxy stdout: Request-ID: f38
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+>request r49 random-binary49.bin s1
+Proxy stdout: Proxy-Connection: close
+Client: Requesting '/random-binary49.bin' from houndshark.ics.cs.cmu.edu:6439
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57982)
+Proxy stdout: † ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57984)
+>wait *
+Proxy stdout: † ­û† ­ûRequest-ID: f40
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57988)
+Proxy stdout: Request-ID: f41
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57992)
+Proxy stdout: Request-ID: f42
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­ûRequest-ID: f43
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 57996)
+Proxy stdout: † ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 57998)
+Proxy stdout: † ­û† ­ûRequest-ID: f44
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 58002)
+Proxy stdout: † ­û† ­ûRequest-ID: f46
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: f45
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: † ­ûUser-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 58004)
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 58006)
+Proxy stdout: Request-ID: f47
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­ûRequest-ID: f48
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 58010)
+Proxy stdout: † ­û† ­û† ­û† ­û† ­ûRequest-ID: f49
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 58096)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58098)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58100)
+Proxy stdout: Request-ID: r01
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r02
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r00
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58102)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58104)
+Proxy stdout: Request-ID: r04
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58106)
+Proxy stdout: Request-ID: r03
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58108)
+Proxy stdout: Request-ID: r05
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58110)
+Proxy stdout: Request-ID: r06
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58112)
+Proxy stdout: Request-ID: r08
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r07
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58114)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58116)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58118)
+Proxy stdout: Request-ID: r09
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58120)
+Proxy stdout: Request-ID: r11
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r10
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58122)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58124)
+Proxy stdout: Request-ID: r12
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58126)
+Proxy stdout: Request-ID: r13
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r15
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58128)
+Proxy stdout: Request-ID: r14
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58130)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58132)
+Proxy stdout: Request-ID: r18
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r17
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58134)
+Proxy stdout: Request-ID: r16
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r19
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58136)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58138)
+Proxy stdout: Request-ID: r20
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58140)
+Proxy stdout: Request-ID: r21
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58142)
+Proxy stdout: Request-ID: r22
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r23
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58144)
+Proxy stdout: Request-ID: r24
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58146)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58148)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58150)
+Proxy stdout: Request-ID: r25
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r27
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58152)
+Proxy stdout: Request-ID: r26
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58154)
+Proxy stdout: Request-ID: r28
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58156)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58158)
+Proxy stdout: Request-ID: r29
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r30
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58160)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58162)
+Proxy stdout: Request-ID: r33
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r31
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58164)
+Proxy stdout: Request-ID: r32
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58166)
+Proxy stdout: Request-ID: r34
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58168)
+Proxy stdout: Request-ID: r36
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r35
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58170)
+Proxy stdout: Request-ID: r37
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58172)
+Proxy stdout: Request-ID: r38
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58174)
+Proxy stdout: Request-ID: r39
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58176)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58178)
+Proxy stdout: Request-ID: r40
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58180)
+Proxy stdout: Request-ID: r41
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r42
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58182)
+Proxy stdout: Request-ID: r43
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58184)
+Proxy stdout: Request-ID: r44
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58186)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58188)
+Proxy stdout: Request-ID: r45
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58190)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58192)
+Proxy stdout: Request-ID: r47
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: r46
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 58194)
+Proxy stdout: Request-ID: r48
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+>check r40
+Request r40 yielded expected status 'ok'
+>check r41
+Request r41 yielded expected status 'ok'
+>check r42
+Request r42 yielded expected status 'ok'
+>check r43
+Request r43 yielded expected status 'ok'
+>check r44
+Request r44 yielded expected status 'ok'
+>check r45
+Request r45 yielded expected status 'ok'
+>check r46
+Request r46 yielded expected status 'ok'
+>check r47
+Request r47 yielded expected status 'ok'
+>check r48
+Request r48 yielded expected status 'ok'
+>check r49
+Request r49 yielded expected status 'ok'
+>check r30
+Request r30 yielded expected status 'ok'
+>check r31
+Request r31 yielded expected status 'ok'
+>check r32
+Request r32 yielded expected status 'ok'
+>check r33
+Request r33 yielded expected status 'ok'
+>check r34
+Request r34 yielded expected status 'ok'
+>check r35
+Request r35 yielded expected status 'ok'
+>check r36
+Request r36 yielded expected status 'ok'
+>check r37
+Request r37 yielded expected status 'ok'
+>check r38
+Request r38 yielded expected status 'ok'
+>check r39
+Request r39 yielded expected status 'ok'
+>check r20
+Request r20 yielded expected status 'ok'
+>check r21
+Request r21 yielded expected status 'ok'
+>check r22
+Request r22 yielded expected status 'ok'
+>check r23
+Request r23 yielded expected status 'ok'
+>check r24
+Request r24 yielded expected status 'ok'
+>check r25
+Request r25 yielded expected status 'ok'
+>check r26
+Request r26 yielded expected status 'ok'
+>check r27
+Request r27 yielded expected status 'ok'
+>check r28
+Request r28 yielded expected status 'ok'
+>check r29
+Request r29 yielded expected status 'ok'
+>check r10
+Request r10 yielded expected status 'ok'
+>check r11
+Request r11 yielded expected status 'ok'
+>check r12
+Request r12 yielded expected status 'ok'
+>check r13
+Request r13 yielded expected status 'ok'
+>check r14
+Request r14 yielded expected status 'ok'
+>check r15
+Request r15 yielded expected status 'ok'
+>check r16
+Request r16 yielded expected status 'ok'
+>check r17
+Request r17 yielded expected status 'ok'
+>check r18
+Request r18 yielded expected status 'ok'
+>check r19
+Request r19 yielded expected status 'ok'
+>check r00
+Request r00 yielded expected status 'ok'
+>check r01
+Request r01 yielded expected status 'ok'
+>check r02
+Request r02 yielded expected status 'ok'
+>check r03
+Request r03 yielded expected status 'ok'
+>check r04
+Request r04 yielded expected status 'ok'
+>check r05
+Request r05 yielded expected status 'ok'
+>check r06
+Request r06 yielded expected status 'ok'
+>check r07
+Request r07 yielded expected status 'ok'
+>check r08
+Request r08 yielded expected status 'ok'
+>check r09
+Request r09 yielded expected status 'ok'
+>delete random-binary00.bin
+>delete random-binary01.bin
+>delete random-binary02.bin
+>delete random-binary03.bin
+>delete random-binary04.bin
+>delete random-binary05.bin
+>delete random-binary06.bin
+>delete random-binary07.bin
+>delete random-binary08.bin
+>delete random-binary09.bin
+>delete random-binary10.bin
+>delete random-binary11.bin
+>delete random-binary12.bin
+>delete random-binary13.bin
+>delete random-binary14.bin
+>delete random-binary15.bin
+>delete random-binary16.bin
+>delete random-binary17.bin
+>delete random-binary18.bin
+>delete random-binary19.bin
+>delete random-binary20.bin
+>delete random-binary21.bin
+>delete random-binary22.bin
+>delete random-binary23.bin
+>delete random-binary24.bin
+>delete random-binary25.bin
+>delete random-binary26.bin
+>delete random-binary27.bin
+>delete random-binary28.bin
+>delete random-binary29.bin
+>delete random-binary30.bin
+>delete random-binary31.bin
+>delete random-binary32.bin
+>delete random-binary33.bin
+>delete random-binary34.bin
+>delete random-binary35.bin
+>delete random-binary36.bin
+>delete random-binary37.bin
+>delete random-binary38.bin
+>delete random-binary39.bin
+>delete random-binary40.bin
+>delete random-binary41.bin
+>delete random-binary42.bin
+>delete random-binary43.bin
+>delete random-binary44.bin
+>delete random-binary45.bin
+>delete random-binary46.bin
+>delete random-binary47.bin
+>delete random-binary48.bin
+>delete random-binary49.bin
+>quit
+Proxy stdout: User
+Proxy stderr: Proxy terminated
+Testing done.  Elapsed time = 3.99 seconds
+ALL TESTS PASSED

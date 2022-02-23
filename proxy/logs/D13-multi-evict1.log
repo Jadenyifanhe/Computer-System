@@ -1,0 +1,509 @@
+>option timing 1
+>option locking 1
+>option semaphore 1
+>proxy ./proxy
+Proxy set up at houndshark.ics.cs.cmu.edu:23287
+>source '/afs/andrew.cmu.edu/usr20/yuchenwu/private/18213/proxy-lab-Chibadaisuki/tests/D13-multi-evict1.cmd'
+># Test ability to evict multiple objects to make room for big ones
+>serve s1
+Server s1 running at houndshark.ics.cs.cmu.edu:3868
+>generate little-text00.txt 10K
+>generate little-text01.txt 10K
+>generate little-text02.txt 10K
+>generate little-text03.txt 10K
+>generate little-text04.txt 10K
+>generate little-text05.txt 10K
+>generate little-text06.txt 10K
+>generate little-text07.txt 10K
+>generate little-text08.txt 10K
+>generate little-text09.txt 10K
+>generate big-text00.txt 100K
+>generate big-text01.txt 100K
+>generate big-text02.txt 100K
+>generate big-text03.txt 100K
+>generate big-text04.txt 100K
+>generate big-text05.txt 100K
+>generate big-text06.txt 100K
+>generate big-text07.txt 100K
+>generate big-text08.txt 100K
+>generate big-text09.txt 100K
+>generate big-text10.txt 100K
+># Use 100K of cache
+>fetch fl00 little-text00.txt s1
+Client: Fetching '/little-text00.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl01 little-text01.txt s1
+Client: Fetching '/little-text01.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl02 little-text02.txt s1
+Client: Fetching '/little-text02.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl03 little-text03.txt s1
+Client: Fetching '/little-text03.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl04 little-text04.txt s1
+Client: Fetching '/little-text04.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl05 little-text05.txt s1
+Client: Fetching '/little-text05.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl06 little-text06.txt s1
+Client: Fetching '/little-text06.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl07 little-text07.txt s1
+Client: Fetching '/little-text07.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl08 little-text08.txt s1
+Client: Fetching '/little-text08.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fl09 little-text09.txt s1
+Client: Fetching '/little-text09.txt' from houndshark.ics.cs.cmu.edu:3868
+>wait *
+>check fl00
+Request fl00 yielded expected status 'ok'
+>check fl01
+Request fl01 yielded expected status 'ok'
+>check fl02
+Request fl02 yielded expected status 'ok'
+>check fl03
+Request fl03 yielded expected status 'ok'
+>check fl04
+Request fl04 yielded expected status 'ok'
+>check fl05
+Request fl05 yielded expected status 'ok'
+>check fl06
+Request fl06 yielded expected status 'ok'
+>check fl07
+Request fl07 yielded expected status 'ok'
+>check fl08
+Request fl08 yielded expected status 'ok'
+>check fl09
+Request fl09 yielded expected status 'ok'
+># Use another 200K of cache
+>fetch fb00 big-text00.txt s1
+Client: Fetching '/big-text00.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb01 big-text01.txt s1
+Client: Fetching '/big-text01.txt' from houndshark.ics.cs.cmu.edu:3868
+>wait *
+># Use another 700K to fill up cache
+>fetch fb02 big-text02.txt s1
+Client: Fetching '/big-text02.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb03 big-text03.txt s1
+Client: Fetching '/big-text03.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb04 big-text04.txt s1
+Client: Fetching '/big-text04.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb05 big-text05.txt s1
+Client: Fetching '/big-text05.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb06 big-text06.txt s1
+Client: Fetching '/big-text06.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb07 big-text07.txt s1
+Client: Fetching '/big-text07.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb08 big-text08.txt s1
+Client: Fetching '/big-text08.txt' from houndshark.ics.cs.cmu.edu:3868
+>wait *
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46320)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46322)
+Proxy stdout: Request-ID: fl00
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: fl01
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46324)
+Proxy stdout: Request-ID: fl02
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46326)
+Proxy stdout: † ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46328)
+Proxy stdout: Request-ID: fl03
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46330)
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46332)
+Proxy stdout: Request-ID: fl04
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûRequest-ID: fl05
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46334)
+Proxy stdout: † ­ûRequest-ID: fl06
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46336)
+Proxy stdout: † ­ûRequest-ID: fl07
+Proxy stdout: Response: Immediate
+Proxy stdout: Request-ID: fl08
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46340)
+Proxy stdout: † ­ûRequest-ID: fl09
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46362)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46364)
+Proxy stdout: Request-ID: fb00
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: fb01
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46370)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46372)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46374)
+Proxy stdout: Request-ID: fb02
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46376)
+Proxy stdout: Request-ID: fb04
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: fb03
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46378)
+Proxy stdout: † ­ûRequest-ID: fb05
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46380)
+Proxy stdout: † ­û† ­û† ­ûRequest-ID: fb06
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46382)
+Proxy stdout: † ­û† ­ûRequest-ID: fb07
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­ûRequest-ID: fb08
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+># These should evict the little entries
+>fetch fb09 big-text09.txt s1
+Client: Fetching '/big-text09.txt' from houndshark.ics.cs.cmu.edu:3868
+>fetch fb10 big-text10.txt s1
+Client: Fetching '/big-text10.txt' from houndshark.ics.cs.cmu.edu:3868
+>wait *
+Proxy stderr: Total cache size exceeded, evicting LRU cache
+Proxy stderr: Total cache size exceeded, evicting LRU cache
+>check fb00
+Request fb00 yielded expected status 'ok'
+>check fb01
+Request fb01 yielded expected status 'ok'
+>check fb02
+Request fb02 yielded expected status 'ok'
+>check fb03
+Request fb03 yielded expected status 'ok'
+>check fb04
+Request fb04 yielded expected status 'ok'
+>check fb05
+Request fb05 yielded expected status 'ok'
+>check fb06
+Request fb06 yielded expected status 'ok'
+>check fb07
+Request fb07 yielded expected status 'ok'
+>check fb08
+Request fb08 yielded expected status 'ok'
+>check fb09
+Request fb09 yielded expected status 'ok'
+>check fb10
+Request fb10 yielded expected status 'ok'
+>delete little-text00.txt
+>delete little-text01.txt
+>delete little-text02.txt
+>delete little-text03.txt
+>delete little-text04.txt
+>delete little-text05.txt
+>delete little-text06.txt
+>delete little-text07.txt
+>delete little-text08.txt
+>delete little-text09.txt
+># These should not be in the cache
+>request rl00 little-text00.txt s1
+Client: Requesting '/little-text00.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl01 little-text01.txt s1
+Client: Requesting '/little-text01.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl02 little-text02.txt s1
+Client: Requesting '/little-text02.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl03 little-text03.txt s1
+Client: Requesting '/little-text03.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl04 little-text04.txt s1
+Client: Requesting '/little-text04.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl05 little-text05.txt s1
+Client: Requesting '/little-text05.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl06 little-text06.txt s1
+Client: Requesting '/little-text06.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl07 little-text07.txt s1
+Client: Requesting '/little-text07.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl08 little-text08.txt s1
+Client: Requesting '/little-text08.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rl09 little-text09.txt s1
+Client: Requesting '/little-text09.txt' from houndshark.ics.cs.cmu.edu:3868
+>wait *
+># Server should respond that the files were not found
+># Out of order response will cause sequential proxy to fail
+>respond rl05 rl06 rl07 rl08 rl09
+Server responded to request rl05 with status not_found (File 'little-text05.txt' not found)
+Server responded to request rl06 with status not_found (File 'little-text06.txt' not found)
+Server responded to request rl07 with status not_found (File 'little-text07.txt' not found)
+Server responded to request rl08 with status not_found (File 'little-text08.txt' not found)
+Server responded to request rl09 with status not_found (File 'little-text09.txt' not found)
+>respond rl00 rl01 rl02 rl03 rl04
+Server responded to request rl00 with status not_found (File 'little-text00.txt' not found)
+Server responded to request rl01 with status not_found (File 'little-text01.txt' not found)
+Server responded to request rl02 with status not_found (File 'little-text02.txt' not found)
+Server responded to request rl03 with status not_found (File 'little-text03.txt' not found)
+Server responded to request rl04 with status not_found (File 'little-text04.txt' not found)
+>wait *
+># Make sure correct response received
+>check rl00 404
+Request rl00 yielded expected status 'not_found'
+>check rl01 404
+Request rl01 yielded expected status 'not_found'
+>check rl02 404
+Request rl02 yielded expected status 'not_found'
+>check rl03 404
+Request rl03 yielded expected status 'not_found'
+>check rl04 404
+Request rl04 yielded expected status 'not_found'
+>check rl05 404
+Request rl05 yielded expected status 'not_found'
+>check rl06 404
+Request rl06 yielded expected status 'not_found'
+>check rl07 404
+Request rl07 yielded expected status 'not_found'
+>check rl08 404
+Request rl08 yielded expected status 'not_found'
+>check rl09 404
+Request rl09 yielded expected status 'not_found'
+># Make sure still have most of the big blocks in cache
+>request rb02 big-text02.txt s1
+Client: Requesting '/big-text02.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb03 big-text03.txt s1
+Client: Requesting '/big-text03.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb04 big-text04.txt s1
+Client: Requesting '/big-text04.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb05 big-text05.txt s1
+Client: Requesting '/big-text05.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb06 big-text06.txt s1
+Client: Requesting '/big-text06.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb07 big-text07.txt s1
+Client: Requesting '/big-text07.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb08 big-text08.txt s1
+Client: Requesting '/big-text08.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb09 big-text09.txt s1
+Client: Requesting '/big-text09.txt' from houndshark.ics.cs.cmu.edu:3868
+>request rb10 big-text10.txt s1
+Client: Requesting '/big-text10.txt' from houndshark.ics.cs.cmu.edu:3868
+>wait *
+Proxy stdout: † ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46398)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46400)
+Proxy stdout: Request-ID: fb09
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: fb10
+Proxy stdout: Response: Immediate
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: † ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û† ­û‡(­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46406)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46408)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46410)
+Proxy stdout: Request-ID: rl01
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: rl00
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: rl02
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46412)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46414)
+Proxy stdout: Request-ID: rl03
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46416)
+Proxy stdout: Request-ID: rl04
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46418)
+Proxy stdout: Request-ID: rl05
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46420)
+Proxy stdout: Request-ID: rl06
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46422)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46424)
+Proxy stdout: Request-ID: rl07
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: rl08
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: rl09
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: ‡(­û‡(­û‡(­û‡(­û‡(­û‡(­û‡(­û‡(­û‡(­û‡(­ûAccepted connection from (houndshark.ics.cs.cmu.edu, 46446)
+Proxy stdout: Request-ID: rb02
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46448)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46450)
+Proxy stdout: Request-ID: rb03
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46452)
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46454)
+Proxy stdout: Request-ID: rb05
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Request-ID: rb04
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46456)
+Proxy stdout: Request-ID: rb07
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46458)
+Proxy stdout: Request-ID: rb06
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+Proxy stdout: Proxy-Connection: close
+Proxy stdout: User-Agent: CMU/1.0 Iguana/20180704 PxyDrive/0.0.1
+Proxy stdout: 
+Proxy stdout: Accepted connection from (houndshark.ics.cs.cmu.edu, 46460)
+Proxy stdout: Request-ID: rb09
+Proxy stdout: Response: Deferred
+Proxy stdout: Connection: close
+>check rb02
+Request rb02 yielded expected status 'ok'
+>check rb03
+Request rb03 yielded expected status 'ok'
+>check rb04
+Request rb04 yielded expected status 'ok'
+>check rb05
+Request rb05 yielded expected status 'ok'
+>check rb06
+Request rb06 yielded expected status 'ok'
+>check rb07
+Request rb07 yielded expected status 'ok'
+>check rb08
+Request rb08 yielded expected status 'ok'
+>check rb09
+ERROR: Request rb09 generated status 'requesting'.  Expecting 'ok'
+>check rb10
+ERROR: Request rb10 generated status 'requesting'.  Expecting 'ok'
+>delete big-text00.txt
+>delete big-text01.txt
+>delete big-text02.txt
+>delete big-text03.txt
+>delete big-text04.txt
+>delete big-text05.txt
+>delete big-text06.txt
+>delete big-text07.txt
+>delete big-text08.txt
+>delete big-text09.txt
+>delete big-text10.txt
+>quit
+Proxy stdout: Proxy-Connect
+Testing done.  Elapsed time = 4.58 seconds
+ERROR COUNT = 2
